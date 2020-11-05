@@ -3,8 +3,8 @@
 
 ---
 ### Libraries used in project
-For Database CRUD code Generation: sqlc (https://github.com/kyleconroy/sqlc)
-For Testing: testify (https://github.com/stretchr/testify)
+- For Database CRUD code Generation: sqlc (https://github.com/kyleconroy/sqlc)
+- For Testing: testify (https://github.com/stretchr/testify)
 
 ---
 ### Purpose of project
