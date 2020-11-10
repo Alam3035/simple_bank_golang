@@ -1,6 +1,9 @@
 postgres:
 	docker-compose up -d --build postgres
 
+stop:
+	docker-compose down -v
+
 createdb:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
 
@@ -19,4 +22,4 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+.PHONY: postgres stopgres createdb dropdb migrateup migratedown sqlc

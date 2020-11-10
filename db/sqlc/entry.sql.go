@@ -9,10 +9,10 @@ import (
 
 const createEntry = `-- name: CreateEntry :one
 INSERT INTO entries (
-    account_id,
-    amount
+  account_id,
+  amount
 ) VALUES (
-    $1, $2
+  $1, $2
 ) RETURNING id, account_id, amount, created_at
 `
 
@@ -52,7 +52,7 @@ func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
 
 const listEntries = `-- name: ListEntries :many
 SELECT id, account_id, amount, created_at FROM entries
-where account_id = $1
+WHERE account_id = $1
 ORDER BY id
 LIMIT $2
 OFFSET $3
@@ -70,7 +70,7 @@ func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Ent
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Entry
+	items := []Entry{}
 	for rows.Next() {
 		var i Entry
 		if err := rows.Scan(

@@ -6,9 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alam3035/simple_bank_golang/util"
-
 	"github.com/stretchr/testify/require"
+	"github.com/techschool/simplebank/util"
 )
 
 func createRandomAccount(t *testing.T) Account {
@@ -26,8 +25,8 @@ func createRandomAccount(t *testing.T) Account {
 	require.Equal(t, arg.Balance, account.Balance)
 	require.Equal(t, arg.Currency, account.Currency)
 
-	require.NotZero(t, account.CreatedAt)
 	require.NotZero(t, account.ID)
+	require.NotZero(t, account.CreatedAt)
 
 	return account
 }
@@ -39,7 +38,6 @@ func TestCreateAccount(t *testing.T) {
 func TestGetAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
-
 	require.NoError(t, err)
 	require.NotEmpty(t, account2)
 
@@ -59,7 +57,6 @@ func TestUpdateAccount(t *testing.T) {
 	}
 
 	account2, err := testQueries.UpdateAccount(context.Background(), arg)
-
 	require.NoError(t, err)
 	require.NotEmpty(t, account2)
 
@@ -72,7 +69,6 @@ func TestUpdateAccount(t *testing.T) {
 
 func TestDeleteAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
-
 	err := testQueries.DeleteAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
 
@@ -82,7 +78,7 @@ func TestDeleteAccount(t *testing.T) {
 	require.Empty(t, account2)
 }
 
-func TestListAccount(t *testing.T) {
+func TestListAccounts(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		createRandomAccount(t)
 	}

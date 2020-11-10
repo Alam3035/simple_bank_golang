@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alam3035/simple_bank_golang/util"
 	"github.com/stretchr/testify/require"
+	"github.com/techschool/simplebank/util"
 )
 
-func createRandomTransfer(t *testing.T, account1 Account, account2 Account) Transfer {
+func createRandomTransfer(t *testing.T, account1, account2 Account) Transfer {
 	arg := CreateTransferParams{
 		FromAccountID: account1.ID,
 		ToAccountID:   account2.ID,
@@ -24,8 +24,8 @@ func createRandomTransfer(t *testing.T, account1 Account, account2 Account) Tran
 	require.Equal(t, arg.ToAccountID, transfer.ToAccountID)
 	require.Equal(t, arg.Amount, transfer.Amount)
 
-	require.NotZero(t, transfer.CreatedAt)
 	require.NotZero(t, transfer.ID)
+	require.NotZero(t, transfer.CreatedAt)
 
 	return transfer
 }
@@ -33,17 +33,15 @@ func createRandomTransfer(t *testing.T, account1 Account, account2 Account) Tran
 func TestCreateTransfer(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
-
 	createRandomTransfer(t, account1, account2)
 }
 
 func TestGetTransfer(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
-
 	transfer1 := createRandomTransfer(t, account1, account2)
 
-	transfer2, err := testQueries.GetTranser(context.Background(), transfer1.ID)
+	transfer2, err := testQueries.GetTransfer(context.Background(), transfer1.ID)
 	require.NoError(t, err)
 	require.NotEmpty(t, transfer2)
 
@@ -54,7 +52,7 @@ func TestGetTransfer(t *testing.T) {
 	require.WithinDuration(t, transfer1.CreatedAt, transfer2.CreatedAt, time.Second)
 }
 
-func TestListTranfer(t *testing.T) {
+func TestListTransfer(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 
@@ -63,14 +61,14 @@ func TestListTranfer(t *testing.T) {
 		createRandomTransfer(t, account2, account1)
 	}
 
-	arg := ListTransferParams{
+	arg := ListTransfersParams{
 		FromAccountID: account1.ID,
 		ToAccountID:   account1.ID,
 		Limit:         5,
 		Offset:        5,
 	}
 
-	transfers, err := testQueries.ListTransfer(context.Background(), arg)
+	transfers, err := testQueries.ListTransfers(context.Background(), arg)
 	require.NoError(t, err)
 	require.Len(t, transfers, 5)
 

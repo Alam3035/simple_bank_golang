@@ -1,5 +1,3 @@
--- this file is create using golang-migrate using this command "migrate create -ext sql -dir db/migration -seq init_schema"
-
 CREATE TABLE "accounts" (
   "id" bigserial PRIMARY KEY,
   "owner" varchar NOT NULL,
