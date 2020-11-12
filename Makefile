@@ -22,4 +22,10 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: postgres stopgres createdb dropdb migrateup migratedown sqlc
+server:
+	go run main.go
+
+start:
+	docker-compose up -d --build postgres && sleep 15 && docker exec -it postgres12 createdb --username=root --owner=root simple_bank && migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up && go run main.go
+
+.PHONY: postgres stopgres createdb dropdb migrateup migratedown sqlc server
